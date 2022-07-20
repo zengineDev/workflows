@@ -47,7 +47,7 @@ jobs:
           images: |
             ${{ inputs.image }}
           tags: |
-            type=semver,pattern={{raw}},value=${{ steps.get_version.outputs.VERSION }}
+            type=raw,pattern={{raw}},value=${{ steps.get_version.outputs.VERSION }}
           labels: |
             org.opencontainers.image.title=${{ inputs.name }}
       - name: Build Binary
