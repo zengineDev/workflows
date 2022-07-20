@@ -18,6 +18,9 @@ on:
       image:
         required: true
         type: string
+      version:
+        required: true
+        type: string
     secrets:
       token:
         required: true
@@ -37,9 +40,6 @@ jobs:
         uses: docker/setup-qemu-action@v1.2.0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1.5.1
-      - name: Get the version
-        id: get_version
-        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -47,7 +47,7 @@ jobs:
           images: |
             ${{ inputs.image }}
           tags: |
-            type=semver,pattern={{raw}},value=${{ steps.semver.outputs.VERSION }}
+            type=semver,pattern={{raw}},value=${{ inputs.version }}
           labels: |
             org.opencontainers.image.title=${{ inputs.name }}
       - name: Build Binary
